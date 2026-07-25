@@ -50,7 +50,7 @@ UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 #UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
 #UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
 #UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
-#UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
+UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 
 
 if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
