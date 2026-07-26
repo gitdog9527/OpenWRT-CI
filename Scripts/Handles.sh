@@ -97,14 +97,10 @@ echo "OOM fix applied"
 cd "$PKG_PATCH"
 
 # NSS 修复
-NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
-[ -f "$NSS_DRV" ] && sed -i 's/START=.*/START=85/g' "$NSS_DRV"
+#NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
+#[ -f "$NSS_DRV" ] && sed -i 's/START=.*/START=85/g' "$NSS_DRV"
 
-NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
-[ -f "$NSS_PBUF" ] && sed -i 's/START=.*/START=86/g' "$NSS_PBUF"
-
-# 删除 ASU 页面
-ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js" 2>/dev/null | head -n1)
-[ -f "$ASU_FILE" ] && rm -f "$ASU_FILE"
+#NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
+#[ -f "$NSS_PBUF" ] && sed -i 's/START=.*/START=86/g' "$NSS_PBUF"
 
 echo "All patches done"
