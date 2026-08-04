@@ -15,12 +15,12 @@ on:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, LiBwrt/openwrt-6.x, Teacher-c/immortalwrt, Teacher-c/openwrt]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, LiBwrt/LibWrt, Teacher-c/immortalwrt, Teacher-c/openwrt]
       BRANCH:
         default: 'main'
         required: true
         type: choice
-        options: [main, master, 24.10-nss, openwrt-24.10]
+        options: [main, master, 25.12-nss, main-nss]
       CACHES:
         description: '使用上次编译缓存'
         default: 'false'
