@@ -15,7 +15,7 @@ on:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, LiBwrt/LibWrt, Teacher-c/immortalwrt, Teacher-c/openwrt]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, LiBwrt/LibWrt, gitdog9527/immortalwrt, gitdog9527/openwrt]
       BRANCH:
         default: 'main'
         required: true
