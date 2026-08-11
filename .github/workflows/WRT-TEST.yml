@@ -30,7 +30,7 @@ on:
         default: 'vernesong/OpenClash'
         required: true
         type: choice
-        options: [vernesong/OpenClash, Teacher-c/OpenClash]
+        options: [vernesong/OpenClash, gitdog9527/OpenClash]
 
 #CI权限
 permissions: write-all
