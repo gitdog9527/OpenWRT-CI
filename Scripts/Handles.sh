@@ -44,8 +44,8 @@ echo "openclash core updated"
 # GEO 数据
 cd ..
 
-curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
-curl -fsSL -o GeoSite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
+#curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
+curl -fsSL -o GeoSite.dat https://github.com/git95279527/v2ray-rules-dat/raw/release/geosite.dat
 curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat
 
 echo "Geo data updated"
