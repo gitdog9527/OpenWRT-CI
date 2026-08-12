@@ -45,11 +45,15 @@ UPDATE_PACKAGE() {
 # UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现coremark错误。
 
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
-UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
-UPDATE_PACKAGE "argon-config" "jerrykuku/luci-theme-argon-config" "master"
-UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
-UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+
+if [[ "$EXTPKG" == "true" ]]; then
+  UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
+  UPDATE_PACKAGE "argon-config" "jerrykuku/luci-theme-argon-config" "master"
+  UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+fi
+
 UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
+UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 
 
 if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
