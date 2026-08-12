@@ -69,3 +69,5 @@ jobs:
       WRT_CACHES: ${{inputs.CACHES}}
       #openclash源
       CLASHSOURCE: ${{inputs.CLASHSOURCE}}
+      #第三方软件包
+      EXTPKG: ${{inputs.EXTPKG}}
