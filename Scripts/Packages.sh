@@ -48,7 +48,7 @@ UPDATE_PACKAGE() {
 
 if [[ "$EXTPKG" == "true" ]]; then
   UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
-  UPDATE_PACKAGE "argon-config" "jerrykuku/luci-theme-argon-config" "master"
+  UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
   UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 fi
 
