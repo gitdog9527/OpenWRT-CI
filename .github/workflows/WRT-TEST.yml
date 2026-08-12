@@ -26,6 +26,11 @@ on:
         default: 'false'
         required: false
         type: boolean
+      EXTPKG:
+        description: '使用第三方软件包'
+        default: 'true'
+        required: true
+        type: boolean
       CLASHSOURCE:
         default: 'vernesong/OpenClash'
         required: true
