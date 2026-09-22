@@ -28,7 +28,7 @@ on:
         type: boolean
       MEM1G:
         description: 'ath11是否适配1G内存'
-        default: 'false'
+        default: 'true'
         required: true
         type: boolean
       EXTPKG:
