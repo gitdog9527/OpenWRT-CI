@@ -62,12 +62,15 @@ if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
 fi
 
 if [[ $WRT_REPO == *"gitdog9527"* ]]; then
-   #添加sqm-scripts-nss
-   git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
    cd "$GITHUB_WORKSPACE/wrt/"
    #添加sonic-fullcone
    curl -sSL https://raw.githubusercontent.com/mufeng05/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
    cd ./package/
+fi
+
+if [[ $WRT_REPO != *"gitdog9527"* ]]; then
+   #添加sqm-scripts-nss
+   git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
 fi
 
 ##删除attendedsysupgrade
