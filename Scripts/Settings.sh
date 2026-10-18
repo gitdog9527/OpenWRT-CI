@@ -49,8 +49,11 @@ fi
 
 #添加ax6和3600大分区stock-layout支持
 if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
-         echo "start apply patch to ax6 and ax3600 stock layout!"
-         git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
-         git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-IPQ_MEM_PROFILE-Support.patch
-         echo "apply patch to ax6 and ax3600 stock layout finished!"
+  echo "start apply patch to ax6 and ax3600 stock layout!"
+         
+# Apply Redmi AX6 Xiaomi AX3600 Stock Layout patch
+  PATCH_URL="https://github.com/hnyyghk/AX6-Actions-OpenWrt/raw/refs/heads/main/0001-ipq807x-add-stock-layout-variant-for-redmi-ax6.patch"
+  wget -O stock.patch "$PATCH_URL"
+  git apply stock.patch
+  echo "apply patch to ax6 and ax3600 stock layout finished!"
 fi
