@@ -69,7 +69,6 @@ if [[ $WRT_REPO == *"gitdog9527"* ]] || [[ $WRT_REPO == *"openwrt"* ]]; then
 fi
 
 if [[ $WRT_REPO == *"JuliusBairaktaris"* ]]; then
-   git clone https://github.com/JuliusBairaktaris/nss-packages.git
    git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
 fi
 
