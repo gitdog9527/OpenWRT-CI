@@ -55,6 +55,14 @@ echo "CONFIG_PACKAGE_nss-firmware=y" >> ./.config
 echo "CONFIG_PACKAGE_nss-firmware-ipq807x=y" >> ./.config
 echo "CONFIG_PACKAGE_nss-firmware-ipq60xx=y" >> ./.config
 echo "CONFIG_PACKAGE_wpad-openssl=y" >> ./.config
+echo "CONFIG_NSS_FIRMWARE_VERSION_12_5=y" >> ./.config
+echo "CONFIG_PACKAGE_kmod-qca-nss-drv=y" >> ./.config
+echo "CONFIG_PACKAGE_kmod-qca-nss-ecm=y" >> ./.config
+echo "CONFIG_PACKAGE_kmod-qca-nss-drv-pppoe=y" >> ./.config
+echo "CONFIG_PACKAGE_kmod-qca-nss-drv-qdisc=y" >> ./.config
+echo "CONFIG_PACKAGE_kmod-qca-nss-drv-igs=y" >> ./.config
+echo "CONFIG_PACKAGE_ppe-qos=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-ppe-qos=y" >> ./.config
 fi
 
 #添加ax6和3600大分区stock-layout支持
