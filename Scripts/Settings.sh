@@ -47,6 +47,16 @@ if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt" || [ 
          echo "apply patch for turboacc finished!"
 fi
 
+#JuliusBairaktaris设置
+if [[ $WRT_REPO == *"JuliusBairaktaris"* ]]; then
+echo "CONFIG_PACKAGE_kmod-nss-wifi-drv=y" >> ./.config
+echo "CONFIG_ATH11K_NSS_WIFI=y" >> ./.config
+echo "CONFIG_PACKAGE_nss-firmware=y" >> ./.config
+echo "CONFIG_PACKAGE_nss-firmware-ipq807x=y" >> ./.config
+echo "CONFIG_PACKAGE_nss-firmware-ipq60xx=y" >> ./.config
+echo "CONFIG_PACKAGE_wpad-openssl=y" >> ./.config
+fi
+
 #添加ax6和3600大分区stock-layout支持
 if [[ $WRT_REPO == *"openwrt"* ]]; then
   echo "start apply patch to ax6 and ax3600 stock layout!"
