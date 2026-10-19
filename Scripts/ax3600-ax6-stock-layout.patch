@@ -1,0 +1,303 @@
+diff --git a/package/boot/uboot-tools/uboot-envtools/files/qualcommax_ipq807x b/package/boot/uboot-tools/uboot-envtools/files/qualcommax_ipq807x
+index 7c15a78c4f..86e6833e22 100644
+--- a/package/boot/uboot-tools/uboot-envtools/files/qualcommax_ipq807x
++++ b/package/boot/uboot-tools/uboot-envtools/files/qualcommax_ipq807x
+@@ -74,7 +74,9 @@ prpl,haze)
+ 	ubootenv_add_mmc "0:APPSBLENV" "" "0x0" "0x40000" "0x400" "0x100"
+ 	;;
+ redmi,ax6|\
++redmi,ax6-stock|\
+ xiaomi,ax3600|\
++xiaomi,ax3600-stock|\
+ xiaomi,ax9000)
+ 	ubootenv_add_mtd "0:appsblenv" "0x0" "0x10000" "0x20000"
+ 	ubootenv_add_sys_mtd "bdata" "0x0" "0x10000" "0x20000"
+diff --git a/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
+new file mode 100644
+index 0000000000..78802d764e
+--- /dev/null
++++ b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
+@@ -0,0 +1,65 @@
++// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
++
++/dts-v1/;
++
++#include "ipq8071-ax3600.dts"
++
++/ {
++	model = "Xiaomi AX3600 (stock layout)";
++	compatible = "xiaomi,ax3600-stock", "qcom,ipq8074";
++
++	aliases {
++		/* Aliases as required by u-boot to patch MAC addresses */
++		ethernet1 = &dp2;
++		ethernet2 = &dp3;
++		ethernet3 = &dp4;
++		ethernet4 = &dp5;
++	};
++
++	chosen {
++		bootargs-append = " root=/dev/ubiblock0_1";
++	};
++};
++
++&qpic_nand {
++	/delete-node/ partitions;
++
++	nand@0 {
++		/delete-node/ partitions;
++
++		partitions {
++			compatible = "qcom,smem-part";
++
++			partition-0-art {
++				label = "0:art";
++				read-only;
++
++				nvmem-layout {
++					compatible = "fixed-layout";
++					#address-cells = <1>;
++					#size-cells = <1>;
++
++					macaddr_dp2: macaddr@6 {
++						reg = <0x6 0x6>;
++					};
++
++					macaddr_dp3: macaddr@c {
++						reg = <0xc 0x6>;
++					};
++
++					macaddr_dp4: macaddr@12 {
++						reg = <0x12 0x6>;
++					};
++
++					macaddr_dp5: macaddr@18 {
++						reg = <0x18 0x6>;
++					};
++
++					caldata_qca9889: caldata@4d000 {
++						reg = <0x33000 0x844>;
++					};
++				};
++			};
++		};
++	};
++};
+diff --git a/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
+new file mode 100644
+index 0000000000..1063ec9823
+--- /dev/null
++++ b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
+@@ -0,0 +1,61 @@
++// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
++
++/dts-v1/;
++
++#include "ipq8071-ax6.dts"
++
++/ {
++	model = "Redmi AX6 (stock layout)";
++	compatible = "redmi,ax6-stock", "qcom,ipq8074";
++
++	aliases {
++		/* Aliases as required by u-boot to patch MAC addresses */
++		ethernet1 = &dp2;
++		ethernet2 = &dp3;
++		ethernet3 = &dp4;
++		ethernet4 = &dp5;
++	};
++
++	chosen {
++		bootargs-append = " root=/dev/ubiblock0_1";
++	};
++};
++
++&qpic_nand {
++	/delete-node/ partitions;
++
++	nand@0 {
++		/delete-node/ partitions;
++
++		partitions {
++			compatible = "qcom,smem-part";
++
++			partition-0-art {
++				label = "0:art";
++				read-only;
++
++				nvmem-layout {
++					compatible = "fixed-layout";
++					#address-cells = <1>;
++					#size-cells = <1>;
++
++					macaddr_dp2: macaddr@6 {
++						reg = <0x6 0x6>;
++					};
++
++					macaddr_dp3: macaddr@c {
++						reg = <0xc 0x6>;
++					};
++
++					macaddr_dp4: macaddr@12 {
++						reg = <0x12 0x6>;
++					};
++
++					macaddr_dp5: macaddr@18 {
++						reg = <0x18 0x6>;
++					};
++				};
++			};
++		};
++	};
++};
+diff --git a/target/linux/qualcommax/image/ipq807x.mk b/target/linux/qualcommax/image/ipq807x.mk
+index de7225767f..da8e03aef6 100644
+--- a/target/linux/qualcommax/image/ipq807x.mk
++++ b/target/linux/qualcommax/image/ipq807x.mk
+@@ -462,6 +462,19 @@ define Device/redmi_ax6
+ endef
+ TARGET_DEVICES += redmi_ax6
+ 
++define Device/redmi_ax6-stock
++	$(call Device/redmi_ax6)
++	DEVICE_VARIANT := (stock layout)
++	DEVICE_ALT0_VENDOR := Redmi
++	DEVICE_ALT0_MODEL := AX6
++	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
++	KERNEL_SIZE :=
++	ARTIFACTS :=
++	IMAGES += factory.ubi
++	IMAGE/factory.ubi := append-ubi
++endef
++TARGET_DEVICES += redmi_ax6-stock
++
+ define Device/spectrum_sax1v1k
+ 	$(call Device/FitImage)
+ 	$(call Device/EmmcImage)
+@@ -557,6 +570,19 @@ endif
+ endef
+ TARGET_DEVICES += xiaomi_ax3600
+ 
++define Device/xiaomi_ax3600-stock
++	$(call Device/xiaomi_ax3600)
++	DEVICE_VARIANT := (stock layout)
++	DEVICE_ALT0_VENDOR := Xiaomi
++	DEVICE_ALT0_MODEL := AX3600
++	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
++	KERNEL_SIZE :=
++	ARTIFACTS :=
++	IMAGES += factory.ubi
++	IMAGE/factory.ubi := append-ubi
++endef
++TARGET_DEVICES += xiaomi_ax3600-stock
++
+ define Device/xiaomi_ax9000
+ 	$(call Device/FitImage)
+ 	$(call Device/UbiFit)
+diff --git a/target/linux/qualcommax/ipq807x/base-files/etc/board.d/01_leds b/target/linux/qualcommax/ipq807x/base-files/etc/board.d/01_leds
+index b49c47fe27..75222e2b57 100644
+--- a/target/linux/qualcommax/ipq807x/base-files/etc/board.d/01_leds
++++ b/target/linux/qualcommax/ipq807x/base-files/etc/board.d/01_leds
+@@ -44,13 +44,15 @@ netgear,wax630)
+ 	ucidef_set_led_netdev "lan1" "LAN1" "lan1:green" "lan1"
+ 	ucidef_set_led_netdev "lan2" "LAN2" "lan2:green" "lan2"
+ 	;;
+-redmi,ax6)
++redmi,ax6|\
++redmi,ax6-stock)
+ 	ucidef_set_led_netdev "wan" "WAN" "blue:network" "wan"
+ 	;;
+ tcl,linkhub-hh500v)
+ 	ucidef_set_led_wlan "wlan5g" "WiFi 5GHz" "blue:wlan" "phy0radio"
+ 	;;
+-xiaomi,ax3600)
++xiaomi,ax3600|\
++xiaomi,ax3600-stock)
+ 	ucidef_set_led_netdev "wan-port-link" "WAN-PORT-LINK" "90000.mdio-1:01:green:wan" "wan" "tx rx link_10 link_100 link_1000"
+ 	ucidef_set_led_netdev "lan1-port-link" "LAN1-PORT-LINK" "90000.mdio-1:02:green:lan" "lan1" "tx rx link_10 link_100 link_1000"
+ 	ucidef_set_led_netdev "lan2-port-link" "LAN2-PORT-LINK" "90000.mdio-1:03:green:lan" "lan2" "tx rx link_10 link_100 link_1000"
+diff --git a/target/linux/qualcommax/ipq807x/base-files/etc/board.d/02_network b/target/linux/qualcommax/ipq807x/base-files/etc/board.d/02_network
+index de072424fe..f41e5cd14e 100644
+--- a/target/linux/qualcommax/ipq807x/base-files/etc/board.d/02_network
++++ b/target/linux/qualcommax/ipq807x/base-files/etc/board.d/02_network
+@@ -43,8 +43,10 @@ ipq807x_setup_interfaces()
+ 	netgear,rbr750|\
+ 	prpl,haze|\
+ 	redmi,ax6|\
++	redmi,ax6-stock|\
+ 	spectrum,sax1v1k|\
+-	xiaomi,ax3600)
++	xiaomi,ax3600|\
++	xiaomi,ax3600-stock)
+ 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
+ 		;;
+ 	edimax,cax1800)
+diff --git a/target/linux/qualcommax/ipq807x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata b/target/linux/qualcommax/ipq807x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata
+index 42f9b87971..0aaa3cfbca 100644
+--- a/target/linux/qualcommax/ipq807x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata
++++ b/target/linux/qualcommax/ipq807x/base-files/etc/hotplug.d/firmware/11-ath11k-caldata
+@@ -25,7 +25,9 @@ case "$FIRMWARE" in
+ 	linksys,mx5300|\
+ 	netgear,wax218|\
+ 	redmi,ax6|\
++	redmi,ax6-stock|\
+ 	xiaomi,ax3600|\
++	xiaomi,ax3600-stock|\
+ 	xiaomi,ax9000|\
+ 	yuncore,ax880|\
+ 	zte,mf269)
+diff --git a/target/linux/qualcommax/ipq807x/base-files/etc/init.d/bootcount b/target/linux/qualcommax/ipq807x/base-files/etc/init.d/bootcount
+index e7c20493b6..6a4ee3ca09 100755
+--- a/target/linux/qualcommax/ipq807x/base-files/etc/init.d/bootcount
++++ b/target/linux/qualcommax/ipq807x/base-files/etc/init.d/bootcount
+@@ -21,5 +21,12 @@ boot() {
+ 	netgear,wax630)
+ 		fw_setenv boot_count 0
+ 	;;
++	redmi,ax6-stock|\
++	xiaomi,ax3600-stock)
++		# OTA handling should not be used. Reset it just in case.
++		fw_setenv flag_ota_reboot 0
++		# Not strictly needed but useful to handle partition crash condition
++		fw_setenv flag_boot_success 1
++	;;
+ 	esac
+ }
+diff --git a/target/linux/qualcommax/ipq807x/base-files/lib/upgrade/platform.sh b/target/linux/qualcommax/ipq807x/base-files/lib/upgrade/platform.sh
+index b9a25bc7b2..29da8a5b03 100644
+--- a/target/linux/qualcommax/ipq807x/base-files/lib/upgrade/platform.sh
++++ b/target/linux/qualcommax/ipq807x/base-files/lib/upgrade/platform.sh
+@@ -262,6 +262,33 @@ platform_do_upgrade() {
+ 		CI_KERN_UBIPART="ubi_kernel"
+ 		CI_ROOT_UBIPART="rootfs"
+ 		CI_DATA_UBIPART="rootfs"
++		nand_do_upgrade "$1"
++		;;
++	redmi,ax6-stock|\
++	xiaomi,ax3600-stock)
++		part_num="$(fw_printenv -n flag_boot_rootfs)"
++		if [ "$part_num" -eq "1" ]; then
++			CI_UBIPART="rootfs_1"
++			target_num=1
++			# Reset fail flag for the current partition
++			# With both partition set to fail, the partition 2 (bit 1)
++			# is loaded
++			fw_setenv flag_try_sys2_failed 0
++		else
++			CI_UBIPART="rootfs"
++			target_num=0
++			# Reset fail flag for the current partition
++			# or uboot will skip the loading of this partition
++			fw_setenv flag_try_sys1_failed 0
++		fi
++
++		# Tell uboot to switch partition
++		fw_setenv flag_boot_rootfs "$target_num"
++		fw_setenv flag_last_success "$target_num"
++
++		# Reset success flag
++		fw_setenv flag_boot_success 0
++
+ 		nand_do_upgrade "$1"
+ 		;;
+ 	spectrum,sax1v1k)
