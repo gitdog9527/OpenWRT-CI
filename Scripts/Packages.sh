@@ -56,7 +56,7 @@ UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 
 
-if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
+if [[ $WRT_REPO == *"openwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
     UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
 fi
@@ -64,18 +64,12 @@ fi
 if [[ $WRT_REPO == *"gitdog9527"* ]] || [[ $WRT_REPO == *"openwrt"* ]]; then
    cd "$GITHUB_WORKSPACE/wrt/"
    #添加sonic-fullcone
-   #curl -sSL https://raw.githubusercontent.com/mufeng05/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
+   curl -sSL https://raw.githubusercontent.com/mufeng05/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
    cd ./package/
 fi
 
-#if [[ $WRT_REPO == *"JuliusBairaktaris"* ]]; then
-#   git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
-#fi
 
 if [[ $WRT_REPO == *"VIKINGYFY"* ]] || [[ $WRT_REPO == *"git95279527"* ]]; then
    #添加sqm-scripts-nss
    git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
 fi
-
-##删除attendedsysupgrade
-#find ../feeds/luci ../feeds/packages -maxdepth 3 -type d -iname '*attendedsysupgrade*' -print -exec rm -rf {} + 2>/dev/null
