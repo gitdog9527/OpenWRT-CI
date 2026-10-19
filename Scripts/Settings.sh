@@ -48,12 +48,8 @@ if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt" || [ 
 fi
 
 #添加ax6和3600大分区stock-layout支持
-if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
+if [[ $WRT_REPO == *"openwrt"* ]]; then
   echo "start apply patch to ax6 and ax3600 stock layout!"
-         
-# Apply Redmi AX6 Xiaomi AX3600 Stock Layout patch
-  PATCH_URL="https://github.com/hnyyghk/AX6-Actions-OpenWrt/raw/refs/heads/main/0001-ipq807x-add-stock-layout-variant-for-redmi-ax6.patch"
-  wget -O stock.patch "$PATCH_URL"
-  git apply stock.patch
+  git apply $GITHUB_WORKSPACE/Scripts/ax3600-ax6-stock-layout.patch
   echo "apply patch to ax6 and ax3600 stock layout finished!"
 fi
