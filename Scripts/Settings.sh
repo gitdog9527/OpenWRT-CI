@@ -24,7 +24,8 @@ sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" 
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
 echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
-#echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=n" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config-zh-cn=n" >> ./.config
 
 #配置ath11k内存
 if [[ "$MEM1G" == "true" ]]; then
@@ -39,13 +40,6 @@ if [[ "$MEM1G" == "false" ]]; then
   echo "apply ATH11K MEM PROFILE 512M!"
 fi
 
-#添加turboacc
-if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt" || [ "$WRT_TARGET" == "X86" ]; then
-         echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
-         echo "start apply patch for turboacc!"
-         #curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
-         echo "apply patch for turboacc finished!"
-fi
 
 #JuliusBairaktaris设置
 if [[ $WRT_REPO == *"JuliusBairaktaris"* ]]; then
