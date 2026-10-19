@@ -125,6 +125,10 @@ jobs:
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
+          if [[ $WRT_REPO == *"JuliusBairaktaris"* ]]; then
+            cp feeds.conf.default feeds.conf
+            echo "src-git nss https://github.com/JuliusBairaktaris/nss-packages.git;edma-nss" >> feeds.conf
+          fi
 
       - name: Check Scripts
         run: |
