@@ -14,27 +14,17 @@ index 7c15a78c4f..86e6833e22 100644
  	ubootenv_add_sys_mtd "bdata" "0x0" "0x10000" "0x20000"
 diff --git a/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
 new file mode 100644
-index 0000000000..78802d764e
+index 0000000000..e96bb34c8a
 --- /dev/null
 +++ b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
-@@ -0,0 +1,65 @@
+@@ -0,0 +1,55 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-+
-+/dts-v1/;
 +
 +#include "ipq8071-ax3600.dts"
 +
 +/ {
 +	model = "Xiaomi AX3600 (stock layout)";
 +	compatible = "xiaomi,ax3600-stock", "qcom,ipq8074";
-+
-+	aliases {
-+		/* Aliases as required by u-boot to patch MAC addresses */
-+		ethernet1 = &dp2;
-+		ethernet2 = &dp3;
-+		ethernet3 = &dp4;
-+		ethernet4 = &dp5;
-+	};
 +
 +	chosen {
 +		bootargs-append = " root=/dev/ubiblock0_1";
@@ -85,27 +75,17 @@ index 0000000000..78802d764e
 +};
 diff --git a/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
 new file mode 100644
-index 0000000000..1063ec9823
+index 0000000000..7492f01441
 --- /dev/null
 +++ b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
-@@ -0,0 +1,61 @@
+@@ -0,0 +1,51 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-+
-+/dts-v1/;
 +
 +#include "ipq8071-ax6.dts"
 +
 +/ {
 +	model = "Redmi AX6 (stock layout)";
 +	compatible = "redmi,ax6-stock", "qcom,ipq8074";
-+
-+	aliases {
-+		/* Aliases as required by u-boot to patch MAC addresses */
-+		ethernet1 = &dp2;
-+		ethernet2 = &dp3;
-+		ethernet3 = &dp4;
-+		ethernet4 = &dp5;
-+	};
 +
 +	chosen {
 +		bootargs-append = " root=/dev/ubiblock0_1";
@@ -154,7 +134,7 @@ diff --git a/target/linux/qualcommax/image/ipq807x.mk b/target/linux/qualcommax/
 index de7225767f..da8e03aef6 100644
 --- a/target/linux/qualcommax/image/ipq807x.mk
 +++ b/target/linux/qualcommax/image/ipq807x.mk
-@@ -462,6 +462,17 @@ define Device/redmi_ax6
+@@ -462,6 +462,19 @@ define Device/redmi_ax6
  endef
  TARGET_DEVICES += redmi_ax6
  
@@ -166,13 +146,15 @@ index de7225767f..da8e03aef6 100644
 +	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
 +	KERNEL_SIZE :=
 +	ARTIFACTS :=
++	IMAGES += factory.ubi
++	IMAGE/factory.ubi := append-ubi
 +endef
 +TARGET_DEVICES += redmi_ax6-stock
 +
  define Device/spectrum_sax1v1k
  	$(call Device/FitImage)
  	$(call Device/EmmcImage)
-@@ -557,6 +570,17 @@ endif
+@@ -557,6 +570,19 @@ endif
  endef
  TARGET_DEVICES += xiaomi_ax3600
  
@@ -184,6 +166,8 @@ index de7225767f..da8e03aef6 100644
 +	DEVICE_ALT0_VARIANT := (custom U-Boot layout)
 +	KERNEL_SIZE :=
 +	ARTIFACTS :=
++	IMAGES += factory.ubi
++	IMAGE/factory.ubi := append-ubi
 +endef
 +TARGET_DEVICES += xiaomi_ax3600-stock
 +
