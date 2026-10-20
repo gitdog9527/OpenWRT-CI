@@ -23,7 +23,7 @@ on:
         options: [main, master, 25.12-nss, main-nss, ppe-nss, nss-edma-rework]
       CACHES:
         description: '使用上次编译缓存'
-        default: 'false'
+        default: 'true'
         required: false
         type: boolean
       MEM1G:
