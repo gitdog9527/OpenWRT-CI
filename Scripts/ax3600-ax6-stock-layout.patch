@@ -14,10 +14,10 @@ index 7c15a78c4f..86e6833e22 100644
  	ubootenv_add_sys_mtd "bdata" "0x0" "0x10000" "0x20000"
 diff --git a/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
 new file mode 100644
-index 0000000000..e96bb34c8a
+index 0000000000..9eff1016ea
 --- /dev/null
 +++ b/target/linux/qualcommax/dts/ipq8071-ax3600-stock.dts
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,12 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +
 +#include "ipq8071-ax3600.dts"
@@ -30,12 +30,219 @@ index 0000000000..e96bb34c8a
 +		bootargs-append = " root=/dev/ubiblock0_1";
 +	};
 +};
+diff --git a/target/linux/qualcommax/dts/ipq8071-ax3600.dts b/target/linux/qualcommax/dts/ipq8071-ax3600.dts
+index 4df2adbb20..44256acd82 100644
+--- a/target/linux/qualcommax/dts/ipq8071-ax3600.dts
++++ b/target/linux/qualcommax/dts/ipq8071-ax3600.dts
+@@ -3,8 +3,7 @@
+ 
+ /dts-v1/;
+ 
+-#include "ipq8071-ax3600.dtsi"
+-#include <dt-bindings/leds/common.h>
++#include "ipq8071-xiaomi.dtsi"
+ 
+ / {
+ 	model = "Xiaomi AX3600";
+@@ -41,23 +40,18 @@
+ 	};
+ };
+ 
+-&pcie_qmp0 {
+-	status = "okay";
+-};
+-
+ &pcie0 {
+ 	status = "okay";
+-
+ 	perst-gpios = <&tlmm 52 GPIO_ACTIVE_HIGH>;
+ 
+ 	pcie@0 {
+ 		wifi0: wifi@0,0 {
+ 			status = "okay";
+-
+ 			compatible = "qcom,ath10k";
++			qcom,ath10k-fw-memory-mode = <1>;
++			qcom,ath10k-calibration-variant = "Xiaomi-AX3600";
+ 			reg = <0x00010000 0 0 0 0>;
+ 
+-			qcom,ath10k-calibration-variant = "Xiaomi-AX3600";
+ 			nvmem-cell-names = "calibration";
+ 			nvmem-cells = <&caldata_qca9889>;
+ 		};
+@@ -65,61 +59,7 @@
+ };
+ 
+ &wifi {
++	status = "okay";
++	qcom,ath11k-fw-memory-mode = <1>;
+ 	qcom,ath11k-calibration-variant = "Xiaomi-AX3600";
+ };
+-
+-&qca8075_1 {
+-	leds {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		led@0 {
+-			reg = <0>;
+-			color = <LED_COLOR_ID_GREEN>;
+-			function = LED_FUNCTION_WAN;
+-			default-state = "keep";
+-		};
+-	};
+-};
+-
+-&qca8075_2 {
+-	leds {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		led@0 {
+-			reg = <0>;
+-			color = <LED_COLOR_ID_GREEN>;
+-			function = LED_FUNCTION_LAN;
+-			default-state = "keep";
+-		};
+-	};
+-};
+-
+-&qca8075_3 {
+-	leds {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		led@0 {
+-			reg = <0>;
+-			color = <LED_COLOR_ID_GREEN>;
+-			function = LED_FUNCTION_LAN;
+-			default-state = "keep";
+-		};
+-	};
+-};
+-
+-&qca8075_4 {
+-	leds {
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		led@0 {
+-			reg = <0>;
+-			color = <LED_COLOR_ID_GREEN>;
+-			function = LED_FUNCTION_LAN;
+-			default-state = "keep";
+-		};
+-	};
+-};
+diff --git a/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
+new file mode 100644
+index 0000000000..99415a0d04
+--- /dev/null
++++ b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
+@@ -0,0 +1,12 @@
++// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
++
++#include "ipq8071-ax6.dts"
++
++/ {
++	model = "Redmi AX6 (stock layout)";
++	compatible = "redmi,ax6-stock", "qcom,ipq8074";
++
++	chosen {
++		bootargs-append = " root=/dev/ubiblock0_1";
++	};
++};
+diff --git a/target/linux/qualcommax/dts/ipq8071-ax6.dts b/target/linux/qualcommax/dts/ipq8071-ax6.dts
+index 6611a8fe27..234c87af4a 100644
+--- a/target/linux/qualcommax/dts/ipq8071-ax6.dts
++++ b/target/linux/qualcommax/dts/ipq8071-ax6.dts
+@@ -3,7 +3,7 @@
+ 
+ /dts-v1/;
+ 
+-#include "ipq8071-ax3600.dtsi"
++#include "ipq8071-xiaomi.dtsi"
+ 
+ / {
+ 	model = "Redmi AX6";
+@@ -34,13 +34,8 @@
+ 	};
+ };
+ 
+-/* AX6 can both have NAND of 256MiB or 128MiB.
+- * To be on the safe side, assume 128MiB of NAND.
+- */
+-&rootfs {
+-	reg = <0x2dc0000 0x5220000>;
+-};
+-
+ &wifi {
++	status = "okay";
++	qcom,ath11k-fw-memory-mode = <1>;
+ 	qcom,ath11k-calibration-variant = "Redmi-AX6";
+ };
+diff --git a/target/linux/qualcommax/dts/ipq8071-xiaomi.dtsi b/target/linux/qualcommax/dts/ipq8071-xiaomi.dtsi
+new file mode 100644
+index 0000000000..5eae5f77ba
+--- /dev/null
++++ b/target/linux/qualcommax/dts/ipq8071-xiaomi.dtsi
+@@ -0,0 +1,196 @@
++// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
++/* Copyright (c) 2021, Robert Marko <robimarko@gmail.com> */
++
++#include "ipq8074.dtsi"
++#include "ipq8074-ess.dtsi"
++#include "ipq8074-nss.dtsi"
++#include "ipq8074-common.dtsi"
++#include "ipq8074-ac-cpu.dtsi"
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/leds/common.h>
++
++/ {
++	aliases {
++		label-mac-device = &swport3;
++		serial0 = &blsp1_uart5;
++
++		led-boot = &led_system_yellow;
++		led-failsafe = &led_system_yellow;
++		led-running = &led_system_blue;
++		led-upgrade = &led_system_yellow;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++		bootargs-append = " root=/dev/ubiblock0_0";
++	};
++
++	keys {
++		compatible = "gpio-keys";
++
++		reset {
++			label = "reset";
++			gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_RESTART>;
++		};
++	};
++};
 +
 +&qpic_nand {
-+	/delete-node/ partitions;
++	status = "okay";
++
++	/* Keep the legacy U-Boot partition fixup away from NAND NVMEM cells.
++	 * It follows the first controller child and replaces its partitions.
++	 */
++	partitions {
++		status = "disabled";
++	};
 +
 +	nand@0 {
-+		/delete-node/ partitions;
++		reg = <0>;
++
++		nand-ecc-strength = <4>;
++		nand-ecc-step-size = <512>;
++		nand-bus-width = <8>;
 +
 +		partitions {
 +			compatible = "qcom,smem-part";
@@ -73,62 +280,108 @@ index 0000000000..e96bb34c8a
 +		};
 +	};
 +};
-diff --git a/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
-new file mode 100644
-index 0000000000..7492f01441
---- /dev/null
-+++ b/target/linux/qualcommax/dts/ipq8071-ax6-stock.dts
-@@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 +
-+#include "ipq8071-ax6.dts"
++&mdio {
++	status = "okay";
++	pinctrl-0 = <&mdio_pins>;
++	pinctrl-names = "default";
++	reset-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
 +
-+/ {
-+	model = "Redmi AX6 (stock layout)";
-+	compatible = "redmi,ax6-stock", "qcom,ipq8074";
++	ethernet-phy-package@0 {
++		compatible = "qcom,qca8075-package";
++		qcom,package-mode = "psgmii";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0>;
 +
-+	chosen {
-+		bootargs-append = " root=/dev/ubiblock0_1";
++		qca8075_1: ethernet-phy@1 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <1>;
++		};
++
++		qca8075_2: ethernet-phy@2 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <2>;
++		};
++
++		qca8075_3: ethernet-phy@3 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <3>;
++		};
++
++		qca8075_4: ethernet-phy@4 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <4>;
++		};
 +	};
 +};
 +
-+&qpic_nand {
-+	/delete-node/ partitions;
++&uniphy0 {
++	status = "okay";
++};
 +
-+	nand@0 {
-+		/delete-node/ partitions;
++&switch {
++	status = "okay";
 +
-+		partitions {
-+			compatible = "qcom,smem-part";
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
 +
-+			partition-0-art {
-+				label = "0:art";
-+				read-only;
++		port@0 {
++			reg = <0>;
++			ethernet = <&edma>;
++			phy-mode = "internal";
 +
-+				nvmem-layout {
-+					compatible = "fixed-layout";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+
-+					macaddr_dp2: macaddr@6 {
-+						reg = <0x6 0x6>;
-+					};
-+
-+					macaddr_dp3: macaddr@c {
-+						reg = <0xc 0x6>;
-+					};
-+
-+					macaddr_dp4: macaddr@12 {
-+						reg = <0x12 0x6>;
-+					};
-+
-+					macaddr_dp5: macaddr@18 {
-+						reg = <0x18 0x6>;
-+					};
-+				};
++			fixed-link {
++				speed = <1000>;
++				full-duplex;
 +			};
 +		};
++
++		swport2: port@2 {
++			reg = <2>;
++			label = "wan";
++			phy-handle = <&qca8075_1>;
++			phy-mode = "psgmii";
++			pcs-handle = <&uniphy0 1>;
++			nvmem-cells = <&macaddr_dp2>;
++			nvmem-cell-names = "mac-address";
++		};
++
++		swport3: port@3 {
++			reg = <3>;
++			label = "lan1";
++			phy-handle = <&qca8075_2>;
++			phy-mode = "psgmii";
++			pcs-handle = <&uniphy0 2>;
++			nvmem-cells = <&macaddr_dp3>;
++			nvmem-cell-names = "mac-address";
++		};
++
++		swport4: port@4 {
++			reg = <4>;
++			label = "lan2";
++			phy-handle = <&qca8075_3>;
++			phy-mode = "psgmii";
++			pcs-handle = <&uniphy0 3>;
++			nvmem-cells = <&macaddr_dp4>;
++			nvmem-cell-names = "mac-address";
++		};
++
++		swport5: port@5 {
++			reg = <5>;
++			label = "lan3";
++			phy-handle = <&qca8075_4>;
++			phy-mode = "psgmii";
++			pcs-handle = <&uniphy0 4>;
++			nvmem-cells = <&macaddr_dp5>;
++			nvmem-cell-names = "mac-address";
++		};
 +	};
++};
++
++&edma {
++	status = "okay";
 +};
 diff --git a/target/linux/qualcommax/image/ipq807x.mk b/target/linux/qualcommax/image/ipq807x.mk
 index de7225767f..da8e03aef6 100644
