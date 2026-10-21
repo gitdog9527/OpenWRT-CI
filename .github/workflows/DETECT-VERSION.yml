@@ -2,8 +2,8 @@ name: DETECT-VERSION
 
 on:
   #自动：
-  schedule:
-    - cron: 0 20 * * *
+  #schedule:
+  #  - cron: 0 20 * * *
   #手动
   workflow_dispatch:
 
