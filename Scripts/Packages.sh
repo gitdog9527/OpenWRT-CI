@@ -50,21 +50,36 @@ UPDATE_PACKAGE() {
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 
 if [[ "$EXTPKG" == "true" ]]; then
-  UPDATE_PACKAGE "luci-theme-argon" "jerrykuku/luci-theme-argon" "master"
-  #UPDATE_PACKAGE "luci-app-argon-config" "jerrykuku/luci-app-argon-config" "master"
-  UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+  if [[ $WRT_REPO == *"gitdog9527"* ]]; then
+    UPDATE_PACKAGE "luci-theme-argon" "gitdog9527/luci-theme-argon" "master"
+    UPDATE_PACKAGE "ddns-go" "gitdog9527/luci-app-ddns-go" "main"
+	UPDATE_PACKAGE "luci-app-openclash" "gitdog9527/OpenClash" "master" "pkg"
+  elif [[ $WRT_REPO == *"git95279527"* ]]; then
+    UPDATE_PACKAGE "luci-theme-argon" "git95279527/luci-theme-argon" "master"
+    UPDATE_PACKAGE "ddns-go" "git95279527/luci-app-ddns-go" "main"
+	UPDATE_PACKAGE "luci-app-openclash" "git95279527/OpenClash" "master" "pkg"
+  else
+    UPDATE_PACKAGE "luci-theme-argon" "jerrykuku/luci-theme-argon" "master"
+    UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+	UPDATE_PACKAGE "luci-app-openclash" "vernesong/OpenClash" "master" "pkg"
+  fi
 fi
 
-UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
-UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
-
+#UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
+#UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 
 if [[ $WRT_REPO == *"openwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
-    #UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
 fi
 
-if [[ $WRT_REPO == *"gitdog9527"* ]] || [[ $WRT_REPO == *"openwrt"* ]]; then
+if [[ $WRT_REPO == *"gitdog9527"* ]]; then
+   cd "$GITHUB_WORKSPACE/wrt/"
+   #添加sonic-fullcone
+   curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
+   cd ./package/
+fi
+
+if [[ $WRT_REPO == *"openwrt"* ]]; then
    cd "$GITHUB_WORKSPACE/wrt/"
    #添加sonic-fullcone
    curl -sSL https://raw.githubusercontent.com/mufeng05/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
