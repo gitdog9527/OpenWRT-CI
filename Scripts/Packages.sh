@@ -83,4 +83,4 @@ if [[ $WRT_REPO == *"openwrt"* ]]; then
 fi
 
 #添加sqm-scripts-nss
-git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
+git clone https://github.com/gitdog9527/sqm-scripts-nss.git
