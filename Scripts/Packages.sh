@@ -82,8 +82,5 @@ if [[ $WRT_REPO == *"openwrt"* ]]; then
    cd ./package/
 fi
 
-
-if [[ $WRT_REPO == *"VIKINGYFY"* ]] || [[ $WRT_REPO == *"git95279527"* ]]; then
-   #添加sqm-scripts-nss
-   git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
-fi
+#添加sqm-scripts-nss
+git clone https://github.com/JuliusBairaktaris/sqm-scripts-nss.git
