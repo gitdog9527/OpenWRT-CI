@@ -70,8 +70,8 @@ fi
 
 if [[ $WRT_REPO == *"gitdog9527"* ]]; then
    cd "$GITHUB_WORKSPACE/wrt/"
-   #添加sonic-fullcone
-   curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
+   #添加sonic-fullcone,编译失败，取消
+   #curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
    cd ./package/
 fi
 
