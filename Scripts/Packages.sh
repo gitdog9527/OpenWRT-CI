@@ -53,20 +53,17 @@ if [[ "$EXTPKG" == "true" ]]; then
   if [[ $WRT_REPO == *"gitdog9527"* ]]; then
     UPDATE_PACKAGE "luci-theme-argon" "gitdog9527/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "gitdog9527/luci-app-ddns-go" "main"
-	UPDATE_PACKAGE "luci-app-openclash" "gitdog9527/OpenClash" "master" "pkg"
   elif [[ $WRT_REPO == *"git95279527"* ]]; then
     UPDATE_PACKAGE "luci-theme-argon" "git95279527/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "git95279527/luci-app-ddns-go" "main"
-	UPDATE_PACKAGE "luci-app-openclash" "git95279527/OpenClash" "master" "pkg"
   else
     UPDATE_PACKAGE "luci-theme-argon" "jerrykuku/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
-	UPDATE_PACKAGE "luci-app-openclash" "vernesong/OpenClash" "master" "pkg"
   fi
 fi
 
 #UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
-#UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
+UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 
 if [[ $WRT_REPO == *"openwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
