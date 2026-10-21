@@ -75,6 +75,7 @@ if [[ $WRT_REPO == *"gitdog9527"* ]]; then
    #添加sonic-fullcone
    curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
    cd ./package/
+   git apply $GITHUB_WORKSPACE/Scripts/firewall4.patch
 fi
 
 if [[ $WRT_REPO == *"openwrt"* ]]; then
