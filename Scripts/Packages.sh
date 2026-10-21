@@ -69,9 +69,8 @@ if [[ $WRT_REPO == *"openwrt"* ]]; then
 fi
 
 if [[ $WRT_REPO == *"gitdog9527"* ]]; then
-   rm -f ./network/config/firewall4/patches/001-firewall4-add-support-for-fullcone-nat.patch
-   rm -rf ./network/utils/fullconenat-nft
-   rm -rf ./network/utils/fullconenat
+   #删除immortalwrt自带的fullconenat
+   find . \( -iname '*fullconenat*' -o -iname '*fullcone-nat*' \) -depth -exec rm -rf -- {} +
    cd "$GITHUB_WORKSPACE/wrt/"
    #添加sonic-fullcone
    curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
