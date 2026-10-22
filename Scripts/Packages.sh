@@ -68,7 +68,7 @@ if [[ $WRT_REPO == *"openwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
 fi
 
-if [[ $WRT_REPO == *"gitdog9527"* ]]; then
+if [[ $WRT_REPO == *"gitdog9527"* ]] || [[ $WRT_REPO == *"LiBwrt"* ]]; then
    #删除immortalwrt自带的fullconenat
    find . \( -iname '*fullconenat*' -o -iname '*fullcone-nat*' \) -depth -exec rm -rf -- {} +
    cd "$GITHUB_WORKSPACE/wrt/"
@@ -85,5 +85,7 @@ if [[ $WRT_REPO == *"openwrt"* ]]; then
    cd ./package/
 fi
 
+if [[ $WRT_REPO != *"LiBwrt"* ]]; then
 #添加sqm-scripts-nss
 git clone https://github.com/gitdog9527/sqm-scripts-nss.git
+fi
