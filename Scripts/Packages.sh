@@ -57,7 +57,7 @@ if [[ "$EXTPKG" == "true" ]]; then
     UPDATE_PACKAGE "luci-theme-argon" "git95279527/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "git95279527/luci-app-ddns-go" "main"
   else
-    UPDATE_PACKAGE "luci-theme-argon" "jerrykuku/luci-theme-argon" "master"
+    UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
   fi
   #UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
