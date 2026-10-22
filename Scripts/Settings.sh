@@ -47,7 +47,6 @@ echo "CONFIG_PACKAGE_kmod-nss-wifi-drv=y" >> ./.config
 echo "CONFIG_ATH11K_NSS_WIFI=y" >> ./.config
 echo "CONFIG_PACKAGE_nss-firmware=y" >> ./.config
 echo "CONFIG_PACKAGE_nss-firmware-ipq807x=y" >> ./.config
-echo "CONFIG_PACKAGE_nss-firmware-ipq60xx=y" >> ./.config
 echo "CONFIG_PACKAGE_wpad-openssl=y" >> ./.config
 echo "CONFIG_NSS_FIRMWARE_VERSION_12_5=y" >> ./.config
 echo "CONFIG_PACKAGE_kmod-qca-nss-drv=y" >> ./.config
