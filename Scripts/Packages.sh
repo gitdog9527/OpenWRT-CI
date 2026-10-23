@@ -79,6 +79,16 @@ if [[ $WRT_REPO == *"gitdog9527"* ]] || [[ $WRT_REPO == *"LiBwrt"* ]]; then
    git apply $GITHUB_WORKSPACE/Scripts/firewall4.patch
 fi
 
+if [[ $WRT_REPO == *"git95279527"* ]] || [[ $WRT_REPO == *"VIKINGYFY"* ]]; then
+   #删除sonic patch
+   cd "$GITHUB_WORKSPACE/wrt/"
+   find . \( -iname '*fullconenat-sonic*' -o -iname '*sonic-fullcone*' \) -depth -exec rm -rf -- {} +
+   #添加sonic-fullcone
+   curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
+   cd ./package/
+   git apply $GITHUB_WORKSPACE/Scripts/firewall4.patch
+fi
+
 if [[ $WRT_REPO == *"openwrt"* ]]; then
    cd "$GITHUB_WORKSPACE/wrt/"
    #添加sonic-fullcone
