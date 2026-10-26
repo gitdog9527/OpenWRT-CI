@@ -90,17 +90,18 @@ awk '{
  }
  print
 }' yml_change.sh > yml_change.sh.tmp && mv yml_change.sh.tmp yml_change.sh
-
 echo "OOM fix applied"
+
+# 修复 openclash_ps.sh：通过 ubus 执行重启,OpenClash 重启任务脱离原进程的生命周期
+sed -i 's|/etc/init.d/openclash restart >/dev/null 2>\&1 \&|ubus call file exec '\''{"command":"sh","params":["-c","/etc/init.d/openclash restart"]}'\'' >/dev/null 2>\&1 \&|' openclash_ps.sh
+echo "openclash restart fix applied"
+
+# 修复 /etc/init.d/openclash：删除 cron 任务时不再重启 cron
+cd "$OPENCLASH_DIR/root/etc/init.d/"
+sed -i '/^del_cron()/,/^save_dnsmasq_server()/s|/etc/init.d/cron restart|crontab "$CRON_FILE"|' openclash
+echo "restart cron fix applied"
 
 # 返回 package
 cd "$PKG_PATCH"
-
-# NSS 修复
-#NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
-#[ -f "$NSS_DRV" ] && sed -i 's/START=.*/START=85/g' "$NSS_DRV"
-
-#NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
-#[ -f "$NSS_PBUF" ] && sed -i 's/START=.*/START=86/g' "$NSS_PBUF"
 
 echo "All patches done"
