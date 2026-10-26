@@ -97,6 +97,7 @@ sed -i 's|/etc/init.d/openclash restart >/dev/null 2>\&1 \&|ubus call file exec 
 echo "openclash restart fix applied"
 
 # 修复 /etc/init.d/openclash：删除 cron 任务时不再重启 cron
+cd "$GITHUB_WORKSPACE/wrt/"
 cd "$OPENCLASH_DIR/root/etc/init.d/"
 sed -i '/^del_cron()/,/^save_dnsmasq_server()/s|/etc/init.d/cron restart|crontab "$CRON_FILE"|' openclash
 echo "restart cron fix applied"
