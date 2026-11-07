@@ -101,12 +101,29 @@ jobs:
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix libfuse-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
-          sudo -E systemctl daemon-reload
-          sudo -E timedatectl set-timezone "Asia/Shanghai"
+          echo "========== DEPENDENCIES COMPLETED =========="
 
-          sudo mkdir -p /mnt/build_wrt
-          sudo chown $USER:$USER /mnt/build_wrt
-          sudo ln -s /mnt/build_wrt $GITHUB_WORKSPACE/wrt
+          echo "[1] systemctl daemon-reload"
+          timeout 60s sudo systemctl daemon-reload
+          echo "[1] DONE"
+
+          echo "[2] timedatectl"
+          timeout 30s sudo timedatectl set-timezone "Asia/Shanghai"
+          echo "[2] DONE"
+
+          echo "[3] mkdir"
+          sudo mkdir -pv /mnt/build_wrt
+          echo "[3] DONE"
+
+          echo "[4] chown"
+          sudo chown "$USER:$USER" /mnt/build_wrt
+          echo "[4] DONE"
+
+          echo "[5] ln -s"
+          sudo ln -sv /mnt/build_wrt "$GITHUB_WORKSPACE/wrt"
+          echo "[5] DONE"
+
+          echo "========== INITIALIZATION COMPLETED =========="
 
       - name: Initialization Values
         run: |
