@@ -84,7 +84,7 @@ if [[ $WRT_REPO == *"git95279527"* ]] || [[ $WRT_REPO == *"VIKINGYFY"* ]]; then
    cd "$GITHUB_WORKSPACE/wrt/"
    find . \( -iname '*fullconenat-sonic*' -o -iname '*sonic-fullcone*' \) -depth -exec rm -rf -- {} +
    #添加sonic-fullcone
-   curl -sSL https://raw.githubusercontent.com/gitdog9527/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
+   curl -sSL https://raw.githubusercontent.com/mufeng05/openwrt-sonic-fullcone/master/add_sonic_fullcone.sh | bash
    cd ./package/
 fi
 
