@@ -61,7 +61,7 @@ if [[ "$EXTPKG" == "true" ]]; then
     UPDATE_PACKAGE "luci-theme-argon" "jerrykuku/luci-theme-argon" "master"
     UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
   fi
-  #UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
+  UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
   UPDATE_PACKAGE "luci-app-openclash" "$CLASHSOURCE" "master" "pkg"
 fi
 
