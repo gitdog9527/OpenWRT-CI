@@ -85,6 +85,7 @@ if [[ "$PREDATA" == "true" ]]; then
 
   chmod +x fakehttp fakesip
   rm -f *.gz
+  echo "fakehttp & fakesip updated"
 fi
 
 # 修复OOM
