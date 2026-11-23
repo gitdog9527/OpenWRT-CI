@@ -36,6 +36,11 @@ on:
         default: 'true'
         required: true
         type: boolean
+      PREDATA:
+        description: '预置数据'
+        default: 'false'
+        required: true
+        type: boolean
       CLASHSOURCE:
         default: 'vernesong/OpenClash'
         required: true
@@ -76,5 +81,7 @@ jobs:
       CLASHSOURCE: ${{inputs.CLASHSOURCE}}
       #第三方软件包
       EXTPKG: ${{inputs.EXTPKG}}
+      #预置数据
+      PREDATA: ${{inputs.PREDATA}}
       #ath11是否适配1G内存
       MEM1G: ${{inputs.MEM1G}}
