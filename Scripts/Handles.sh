@@ -33,23 +33,24 @@ CORE_MATE="https://github.com/$CLASHSOURCE/raw/core/master/smart/clash-linux-$CO
 cd root/etc/openclash/
 mkdir -p core && cd core
 
-curl -fsSL -o meta.tar.gz "$CORE_MATE"
-tar -zxf meta.tar.gz
-mv -f clash clash_meta
-chmod +x ./*
-rm -f ./*.gz
+#curl -fsSL -o meta.tar.gz "$CORE_MATE"
+#tar -zxf meta.tar.gz
+#mv -f clash clash_meta
+#chmod +x ./*
+#rm -f ./*.gz
 
-echo "openclash core updated"
+#echo "openclash core updated"
 
 # GEO 数据
 cd ..
 
 #curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
 #curl -fsSL -o ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
-curl -fsSL -o GeoSite.dat https://github.com/git95279527/v2ray-rules-dat/raw/release/geosite.dat
-curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip.dat
-echo "Geo data updated"
+#curl -fsSL -o GeoSite.dat https://github.com/git95279527/v2ray-rules-dat/raw/release/geosite.dat
+#curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip.dat
+#echo "Geo data updated"
 
+# Fake 工具
 if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
     CORE_TYPE="x86_64"
 elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
@@ -60,24 +61,23 @@ else
     CORE_TYPE="$WRT_TARGET"
 fi
 
-# Fake 工具
-curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
-tar -zxf FakeHTTP.tar.gz
-mv fakehttp-linux-$CORE_TYPE/fakehttp ./
-rm -rf fakehttp-linux-$CORE_TYPE
+#curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
+#tar -zxf FakeHTTP.tar.gz
+#mv fakehttp-linux-$CORE_TYPE/fakehttp ./
+#rm -rf fakehttp-linux-$CORE_TYPE
 
-curl -fsSL -o FakeSIP.tar.gz "https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
-tar -zxf FakeSIP.tar.gz
-mv fakesip-linux-$CORE_TYPE/fakesip ./
-rm -rf fakesip-linux-$CORE_TYPE
+#curl -fsSL -o FakeSIP.tar.gz "https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
+#tar -zxf FakeSIP.tar.gz
+#mv fakesip-linux-$CORE_TYPE/fakesip ./
+#rm -rf fakesip-linux-$CORE_TYPE
 
-chmod +x fakehttp fakesip
-rm -f *.gz
+#chmod +x fakehttp fakesip
+#rm -f *.gz
 
 # LightGBM
-curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin
+#curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin
 
-echo "Extra components done"
+#echo "Extra components done"
 
 # 修复OOM
 cd "$GITHUB_WORKSPACE/wrt/"
