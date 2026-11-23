@@ -17,7 +17,7 @@ echo "OPENCLASH_DIR=$OPENCLASH_DIR" >> "$GITHUB_ENV"
 
 cd "$OPENCLASH_DIR"
 
-# 架构判断
+# openclash架构判断
 if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
     CORE_TYPE="amd64"
 elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
@@ -28,29 +28,39 @@ else
     CORE_TYPE="$WRT_TARGET"
 fi
 
+# core核心链接
 CORE_MATE="https://github.com/$CLASHSOURCE/raw/core/master/smart/clash-linux-$CORE_TYPE.tar.gz"
 
 cd root/etc/openclash/
 mkdir -p core && cd core
 
-#curl -fsSL -o meta.tar.gz "$CORE_MATE"
-#tar -zxf meta.tar.gz
-#mv -f clash clash_meta
-#chmod +x ./*
-#rm -f ./*.gz
+# 预置clash核心
+if [[ "$PREDATA" == "true" ]]; then
+  curl -fsSL -o meta.tar.gz "$CORE_MATE"
+  tar -zxf meta.tar.gz
+  mv -f clash clash_meta
+  chmod +x ./*
+  rm -f ./*.gz
+  echo "openclash core updated"
+fi
 
-#echo "openclash core updated"
-
-# GEO 数据
+# 返回上层目录
 cd ..
 
-#curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
-#curl -fsSL -o ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
-#curl -fsSL -o GeoSite.dat https://github.com/git95279527/v2ray-rules-dat/raw/release/geosite.dat
-#curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip.dat
-#echo "Geo data updated"
+# 预置GEO 数据
+if [[ "$PREDATA" == "true" ]]; then
+  curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
+  curl -fsSL -o ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+  curl -fsSL -o GeoSite.dat https://github.com/git95279527/v2ray-rules-dat/raw/release/geosite.dat
+  curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip.dat
+  echo "Geo data updated"
 
-# Fake 工具
+# 预置LightGBM
+  curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin
+  echo "LightGBM updated"
+fi
+
+# Fake工具架构判断
 if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
     CORE_TYPE="x86_64"
 elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
@@ -61,23 +71,21 @@ else
     CORE_TYPE="$WRT_TARGET"
 fi
 
-#curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
-#tar -zxf FakeHTTP.tar.gz
-#mv fakehttp-linux-$CORE_TYPE/fakehttp ./
-#rm -rf fakehttp-linux-$CORE_TYPE
+# 预置 Fakesip和Fakehttp
+if [[ "$PREDATA" == "true" ]]; then
+  curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
+  tar -zxf FakeHTTP.tar.gz
+  mv fakehttp-linux-$CORE_TYPE/fakehttp ./
+  rm -rf fakehttp-linux-$CORE_TYPE
 
-#curl -fsSL -o FakeSIP.tar.gz "https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
-#tar -zxf FakeSIP.tar.gz
-#mv fakesip-linux-$CORE_TYPE/fakesip ./
-#rm -rf fakesip-linux-$CORE_TYPE
+  curl -fsSL -o FakeSIP.tar.gz "https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
+  tar -zxf FakeSIP.tar.gz
+  mv fakesip-linux-$CORE_TYPE/fakesip ./
+  rm -rf fakesip-linux-$CORE_TYPE
 
-#chmod +x fakehttp fakesip
-#rm -f *.gz
-
-# LightGBM
-#curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin
-
-#echo "Extra components done"
+  chmod +x fakehttp fakesip
+  rm -f *.gz
+fi
 
 # 修复OOM
 cd "$GITHUB_WORKSPACE/wrt/"
